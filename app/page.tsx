@@ -146,16 +146,23 @@ interface FormData {
   unPaidLeaveDays: string;
 }
 
-interface Result extends FormData {
+interface Duration {
+  years: number;
+  months: number;
+  days: number;
+  totalDays: number;
+  decimalYears: number;
+}
+
+interface Result {
+  basicSalary: string;
+  startDate: string;
+  endDate: string;
+  rule: string;
+  unPaidLeaveDays: string;
   gratuityAmount: string;
-  dailySalary: any;
-  decimalYears: any;
-  duration: {
-    years: number;
-    months: number;
-    days: number;
-    totalDays: number;
-  };
+  dailySalary: string | undefined;
+  duration: Duration;
 }
 
 const GratuityCalculator = () => {
@@ -221,13 +228,13 @@ const GratuityCalculator = () => {
 
     setResult({
       gratuityAmount: amount.toFixed(2),
-      dailySalary : dailySalary?.toFixed(2),
+      dailySalary: dailySalary?.toFixed(2),
       duration: {
         years: duration.years,
         months: duration.months,
         days: duration.days,
         totalDays: duration.totalDays,
-        decimalYears: duration.decimalYears,
+        decimalYears: duration.decimalYears ?? 0, 
       },
       ...formData,
     });
