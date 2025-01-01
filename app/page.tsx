@@ -4,69 +4,50 @@ import React, { useState } from "react";
 import { Calculator, AlertCircle } from "lucide-react";
 
 // UI Components
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className="text-gray-800" {...props} />
-));
+const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  (props, ref) => <div ref={ref} className="text-gray-800" {...props} />
+);
 Card.displayName = "Card";
 
-const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className="flex flex-col space-y-2 p-2" {...props} />
-));
+const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  (props, ref) => <div ref={ref} className="flex flex-col space-y-2 p-2" {...props} />
+);
 CardHeader.displayName = "CardHeader";
 
-const CardTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h3 ref={ref} className="text-2xl font-semibold tracking-tight" {...props} />
-));
+const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
+  (props, ref) => <h3 ref={ref} className="text-2xl font-semibold tracking-tight" {...props} />
+);
 CardTitle.displayName = "CardTitle";
 
-const CardDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <p ref={ref} className="text-sm text-gray-500" {...props} />
-));
+const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
+  (props, ref) => <p ref={ref} className="text-sm text-gray-500" {...props} />
+);
 CardDescription.displayName = "CardDescription";
 
-const CardContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className="p-3 pt-0" {...props} />
-));
+const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  (props, ref) => <div ref={ref} className="p-3 pt-0" {...props} />
+);
 CardContent.displayName = "CardContent";
 
-const Alert = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { variant?: "default" | "destructive" }
->(({ variant = "default", className, ...props }, ref) => (
-  <div
-    ref={ref}
-    role="alert"
-    className={`relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground ${
-      variant === "destructive"
-        ? "border-red-500/50 text-red-600"
-        : "bg-gray-100 text-gray-800"
-    }`}
-    {...props}
-  />
-));
+const Alert = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { variant?: "default" | "destructive" }>(
+  ({ variant = "default", ...props }, ref) => (
+    <div
+      ref={ref}
+      role="alert"
+      className={`relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground ${
+        variant === "destructive"
+          ? "border-red-500/50 text-red-600"
+          : "bg-gray-100 text-gray-800"
+      }`}
+      {...props}
+    />
+  )
+);
 Alert.displayName = "Alert";
 
-const AlertDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className="text-sm [&_p]:leading-relaxed" {...props} />
-));
+const AlertDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
+  (props, ref) => <div ref={ref} className="text-sm [&_p]:leading-relaxed" {...props} />
+);
 AlertDescription.displayName = "AlertDescription";
 
 // Utility Functions
@@ -203,10 +184,7 @@ const GratuityCalculator = () => {
   const calculateGratuity = () => {
     if (!validateForm()) return;
 
-    const duration : any= calculateServiceDuration(
-      formData.startDate,
-      formData.endDate
-    );
+    const duration = calculateServiceDuration(formData.startDate, formData.endDate);
 
     const {
       amount,
@@ -234,7 +212,7 @@ const GratuityCalculator = () => {
         months: duration.months,
         days: duration.days,
         totalDays: duration.totalDays,
-        decimalYears: duration.decimalYears ?? 0, 
+        decimalYears: duration.decimalYears ?? 0,
       },
       ...formData,
     });
@@ -268,139 +246,101 @@ const GratuityCalculator = () => {
                     name="basicSalary"
                     value={formData.basicSalary}
                     onChange={handleInputChange}
-                    className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-400"
                     placeholder="Enter basic salary"
                   />
                 </div>
 
-                <div className="flex gap-4">
-                  <div className="flex-1">
-                    <label className="block text-sm font-medium mb-1">
-                      Start Date
-                    </label>
-                    <div className="relative">
-                      <input
-                        type="date"
-                        name="startDate"
-                        value={formData.startDate}
-                        onChange={handleInputChange}
-                        className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <label className="block text-sm font-medium mb-1">
-                      End Date
-                    </label>
-                    <input
-                      type="date"
-                      name="endDate"
-                      value={formData.endDate}
-                      onChange={handleInputChange}
-                      className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    Start Date
+                  </label>
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={formData.startDate}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-400"
+                  />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium mb-1">
-                    Leave without Pay (Days)
+                    End Date
+                  </label>
+                  <input
+                    type="date"
+                    name="endDate"
+                    value={formData.endDate}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-400"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    Unpaid Leave Days
                   </label>
                   <input
                     type="number"
                     name="unPaidLeaveDays"
                     value={formData.unPaidLeaveDays}
                     onChange={handleInputChange}
-                    className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter leave without pay days"
+                    className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-400"
+                    placeholder="0"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium mb-1">
-                    Rule for Gratuity
+                    Gratuity Calculation Rule
                   </label>
                   <select
                     name="rule"
                     value={formData.rule}
                     onChange={handleInputChange}
-                    className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-400"
                   >
-                    <option value="currentRule">
-                      Current Rule (21 days for the first year, 30 days for the
-                      rest)
-                    </option>
-                    <option value="oldRule">
-                      Old Rule (25 days for first 3 years, 30 days for next 3
-                      years, 35 days for others)
-                    </option>
+                    <option value="currentRule">Current Rule</option>
+                    <option value="oldRule">Old Rule</option>
                   </select>
                 </div>
 
-                <div>
-                  <button
-                    onClick={calculateGratuity}
-                    className="w-full py-3 mt-4 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  >
-                    Calculate Gratuity
-                  </button>
+                <button
+                  onClick={calculateGratuity}
+                  className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                >
+                  Calculate
+                </button>
+              </div>
+
+              {/* Results */}
+              {result && (
+                <div className="space-y-4">
+                  <h2 className="text-xl font-semibold text-blue-600">Result</h2>
+                  <div className="space-y-2">
+                    <p>
+                      <strong>Gratuity Amount (AED):</strong> {result.gratuityAmount}
+                    </p>
+                    <p>
+                      <strong>Daily Salary (AED):</strong> {result.dailySalary}
+                    </p>
+                    <p>
+                      <strong>Service Duration:</strong> {result.duration.years} years,{" "}
+                      {result.duration.months} months, {result.duration.days} days
+                    </p>
+                  </div>
                 </div>
-              </div>
-
-              {/* Result Section */}
-              <div className="space-y-4">
-                {error && (
-                  <Alert variant="destructive">
-                    <AlertCircle className="h-6 w-6 text-red-500" />
-                    <AlertDescription>{error}</AlertDescription>
-                  </Alert>
-                )}
-
-                {result && (
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Gratuity Calculation Result</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2">
-                        {/* <div className="flex justify-between text-sm px-2">
-                          <span>Years of Service:</span>
-                          <span>{result.duration.years} years</span>
-                        </div>
-                        <div className="flex justify-between text-sm px-2">
-                          <span>Months of Service:</span>
-                          <span>{result.duration.months} months</span>
-                        </div>
-                        <div className="flex justify-between text-sm px-2">
-                          <span>Days of Service:</span>
-                          <span>{result.duration.days} days</span>
-                        </div> */}
-                        <div className="flex justify-between text-sm font-medium px-2">
-                          <span>Total Service (in days):</span>
-                          <span>{result.duration.totalDays} days</span>
-                        </div>
-                        <div className="flex justify-between text-sm px-2">
-                          <span>Daily Salary:</span>
-                          <span>AED {result.dailySalary}</span>
-                        </div>
-                        <div className="flex justify-between text-sm px-2">
-                          <span>Decimal Years:</span>
-                          <span>
-                            {result.duration.decimalYears.toFixed(2)} years
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-sm bg-gray-300 py-2 px-2">
-                          <span>Calculated Gratuity:</span>
-                          <span>AED {result.gratuityAmount}</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
+              )}
             </div>
           </CardContent>
         </Card>
+        {error && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-6 w-6" />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
       </div>
     </div>
   );
